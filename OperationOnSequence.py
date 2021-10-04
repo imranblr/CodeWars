@@ -45,10 +45,10 @@ def solve(arr):
         # print("The product is ->", prod)
         # for y in range(sqr, int(sqr / 2), -int(sqr/10)):
         def f2(sqr, prod):
-            for y in range(sqr, int(sqr / 2), -1):
+            for y in range(sqr, int(sqr / 2), -1571):
                 elem3 = y * y
                 dif = prod - elem3
-                # print("elem3 ->", y, "srqt ->", sqr, "dif ->", dif)
+                print("elem3 ->", y, "srqt ->", sqr, "dif ->", dif)
                 sqr2 = int(dif ** (0.5))
                 # for z in range(sqr2, 1, -int(sqr2/2)):
                 for z in range(sqr2, int(sqr2 / 2), -1):
@@ -86,10 +86,52 @@ def solve(arr):
     #     return reduce(list_2)
     #     iter -= 1
 
+
+# def solve(arr):
+#     def reduce(array):
+#         final = []
+#         prod = 1
+#         sec = 0
+#         for x in array:
+#             sec += 1
+#             if sec == 1:
+#                 elem1 = x * x
+#             elif sec == 2:
+#                 elem2 = x * x
+#                 sum = elem1 + elem2
+#                 prod *= sum
+#                 sec = 0
+#         sqr = int((prod ** (0.5)))
+#
+#         def f2(sqr, prod):
+#             for y in range(sqr, int(sqr / 2), -1):
+#                 elem3 = y * y
+#                 dif = prod - elem3
+#                 sqr2 = int(dif ** (0.5))
+#                 for z in range(sqr2, int(sqr2 / 2), -1):
+#                     elem4 = z * z
+#                     if elem3 + elem4 == prod: return [y, z]
+#
+#         final.append(f2(sqr, prod))
+#         return [j for sub in final for j in sub]
+#
+#     while True:
+#         f = lambda A, n=4: [A[i:i + n] for i in range(0, len(A), 4)]
+#         if len(arr) > 2:
+#             list = f(arr)
+#             list_2 = []
+#             for item in list:
+#                 list_2.append(reduce(item))
+#             arr = [j for sub in list_2 for j in sub]
+#         else:
+#             return arr
+
 a1 = [1, 3, 1, 2, 1, 5, 1, 9]
 print(solve(a1), [250, 210])
 a2 = [2, 1, 3, 4]
 print(solve(a2), [2, 11])
-a3 = [3, 9, 8, 4, 6, 8, 7, 8, 4, 8, 5, 6, 6, 4, 4, 5]
+a3 = [9000, 600, 3216, 248]
 print(solve(a3), [13243200, 25905600])
+a4 = [3, 9, 8, 4, 6, 8, 7, 8, 4, 8, 5, 6, 6, 4, 4, 5]
+print(solve(a4), [13243200, 25905600])
 
