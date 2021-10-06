@@ -74,8 +74,6 @@ def mix(s1, s2):
         #                 try: l1.popitem()
         #                 except: pass
 
-
-
         for x in l1:
             for y in l2:
                 if x in l2.keys():
