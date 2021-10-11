@@ -148,9 +148,16 @@ def mix(s1, s2):
 
     def output(l1, l2):
         str1 = ""
+        str2 = ""
+        prev = ""
+        same = 0
         repeat = []
         for x in list(l1.keys()):
             for y in list(l2.keys()):
+                if same is 1 and prev != l1[x]:
+                    str1 += str2
+                    str2 =""
+                    same = 0
 
                 print("String ->", str1)
                 print(l1)
@@ -162,6 +169,7 @@ def mix(s1, s2):
                         str1 += "1:" + x * l1[x] + "/"
                         repeat.append(x)
                         l1.pop(x)
+                        last = l1[x]
                         break
                     if x in l2.keys():
                         repeat.append(x)
@@ -172,6 +180,7 @@ def mix(s1, s2):
                         str1 += "2:" + y * l2[y] + "/"
                         repeat.append(y)
                         l2.pop(y)
+                        last = l1[x]
                         break
                     if y in l1.keys():
                         repeat.append(y)
@@ -180,11 +189,18 @@ def mix(s1, s2):
                 elif l1[x] == l2[y]:
                     if ord(y) > ord(x):
                         if x not in repeat:
+                            if same is 1 and prev == l1[x]:
+                                str2 = "1:" + x * l1[x] + "/" + str2
+                                print("this is executing..")
+                                if y is list(l2)[-1] and prev == l1[x]:
+                                    str1 += "2:" + y * l2[y] + "/" + str2
+                                break
                             str1 += "1:" + x * l1[x] + "/"
                             repeat.append(x)
                             l1.pop(x)
                             if y is list(l2)[-1]:
                                 str1 += "2:" + y * l2[y]
+                            last = l1[x]
                             break
                         if x in l2.keys():
                             repeat.append(x)
@@ -192,26 +208,38 @@ def mix(s1, s2):
                             #break
                     elif ord(x) > ord(y):
                         if y not in repeat:
+                            if same is 1 and prev == l1[x]:
+                                str2 = "2:" + y * l2[y] + "/" + str2
+                                print("this is executing..")
+                                if x is list(l1)[-1] and prev == l1[x]:
+                                    str1 += "1:" + x * l1[x] + "/" + str2
+                                break
                             str1 += "2:" + y * l2[y] + "/"
                             repeat.append(y)
                             l2.pop(y)
                             if x is list(l1)[-1]:
                                 str1 += "1:" + x * l1[x]
+                            last = l1[x]
                             break
                         if y in l1.keys():
                             repeat.append(y) #print("Removing Re-Occurances of ->", l1.pop(y))
                             l1.pop(y)
                             #break
                     elif x is y:
+
                         # if l1[x] == l1[l1.index(x) + 1] and x not in l2.keys():
                         #     print("Same values in the list")
                         # print(l1[l1.index(x) + 1])
                         if x not in repeat:
-                            str1 += "=:" + x * l1[x] + "/"
+                            str2 += "=:" + x * l1[x] + "/"
                             repeat.append(x)
+                            same = 1
+                            prev = l1[x]
+                            print("this is previous", prev, "same is ", same)
                             l1.pop(x)
                             repeat.append(y)
                             l2.pop(y)
+
                             break
 
 
@@ -236,9 +264,9 @@ def mix(s1, s2):
                 #     if r is 1: str1 += "2:" + x * l1[x] + "/"
                 #     else: str1 += "1:" + x * l1[x] + "/"
                 #     break
-        # return str1[:-1]
+        return str1[:-1]
 
-        return str1
+        # return str1
 
 
     # if len(l1) >= len(l2):
