@@ -158,14 +158,19 @@ def mix(s1, s2):
                     str1 += str2
                     str2 =""
                     same = 0
-
-                print("String ->", str1)
+                print("Repeat ->", repeat)
+                print("String1 ->", str1)
+                print("String2 ->", str2)
                 print(l1)
                 print(l2)
                 print(x, l1[x], y, l2[y])
                 if l1[x] > l2[y]:
 
                     if x not in repeat:
+                        if same is 1:
+                            str1 = "1:" + x * l1[x] + "/" + str2
+                            print("this is executing..")
+                            break
                         str1 += "1:" + x * l1[x] + "/"
                         repeat.append(x)
                         l1.pop(x)
@@ -177,6 +182,10 @@ def mix(s1, s2):
                         #break
                 elif l2[y] > l1[x]:
                     if y not in repeat:
+                        if same is 1:
+                            str1 = "2:" + y * l2[y] + "/" + str2
+                            print("this is executing..")
+                            break
                         str1 += "2:" + y * l2[y] + "/"
                         repeat.append(y)
                         l2.pop(y)
@@ -190,10 +199,11 @@ def mix(s1, s2):
                     if ord(y) > ord(x):
                         if x not in repeat:
                             if same is 1 and prev == l1[x]:
-                                str2 = "1:" + x * l1[x] + "/" + str2
-                                print("this is executing..")
                                 if y is list(l2)[-1] and prev == l1[x]:
                                     str1 += "2:" + y * l2[y] + "/" + str2
+                                    break
+                                str2 = "1:" + x * l1[x] + "/" + str2
+                                print("this is executing..")
                                 break
                             str1 += "1:" + x * l1[x] + "/"
                             repeat.append(x)
@@ -209,10 +219,12 @@ def mix(s1, s2):
                     elif ord(x) > ord(y):
                         if y not in repeat:
                             if same is 1 and prev == l1[x]:
-                                str2 = "2:" + y * l2[y] + "/" + str2
-                                print("this is executing..")
                                 if x is list(l1)[-1] and prev == l1[x]:
-                                    str1 += "1:" + x * l1[x] + "/" + str2
+                                    str2 = "2:" + y * l2[y] + "/" + str2
+
+                                    # break
+                                str1 += "1:" + x * l1[x] + "/" + str2
+                                print("this is executing..")
                                 break
                             str1 += "2:" + y * l2[y] + "/"
                             repeat.append(y)
@@ -232,15 +244,20 @@ def mix(s1, s2):
                         # print(l1[l1.index(x) + 1])
                         if x not in repeat:
                             str2 += "=:" + x * l1[x] + "/"
-                            repeat.append(x)
+                            # repeat.append(x)
                             same = 1
                             prev = l1[x]
-                            print("this is previous", prev, "same is ", same)
-                            l1.pop(x)
-                            repeat.append(y)
-                            l2.pop(y)
-
-                            break
+                            print("previous is", prev, "same is ", same, "string2 is ", str2)
+                            # repeat.append(y)
+                            if x != list(l1)[-1] or y != list(l1)[-1]:
+                                repeat.append(x)
+                                repeat.append(y)
+                                print("removed ->", l1.pop(x))
+                                print("removed ->", l2.pop(y))
+                                break
+                            # if y != list(l1)[-1] :
+                            #     print("removed ->", l2.pop(y))
+                            # break
 
 
 
@@ -291,7 +308,7 @@ def mix(s1, s2):
 # s1 = "my&friend&Paul has heavy hats! &"
 # s2 = "my friend John has many many friends &"
 # print(mix(s1, s2), "--> 2:nnnnn/1:aaaa/1:hhh/2:mmm/2:yyy/2:dd/2:ff/2:ii/2:rr/=:ee/=:ss")
-
+#
 # s1 = "mmmmm m nnnnn y&friend&Paul has heavy hats! &"
 # s2 = "my frie n d Joh n has ma n y ma n y frie n ds n&"
 # print(mix(s1, s2), "--> 1:mmmmmm/=:nnnnnn/1:aaaa/1:hhh/2:yyy/2:dd/2:ff/2:ii/2:rr/=:ee/=:ss")
@@ -300,7 +317,7 @@ s1="Are the kids at home? aaaaa fffff"
 s2="Yes they are here! aaaaa fffff"
 print(mix(s1, s2), "--> =:aaaaaa/2:eeeee/=:fffff/1:tt/2:rr/=:hh")
 
-# print(mix("Are they hereZaz", "yes, they are here"), "2:eeeee/2:yy/=:hh/=:rr")
+print(mix("Are they hereZaz", "yes, they are here"), "2:eeeee/2:yy/=:hh/=:rr")
 # print(mix("Sadus:cpms>orqn3zecwGvnznSgacs", "MynwdKizfd$lvse+gnbaGydxyXzayp"),
 #                        '2:yyyy/1:ccc/1:nnn/1:sss/2:ddd/=:aa/=:zz')
 # print(mix("looping is fun but dangerous", "less dangerous than coding"),
