@@ -19,26 +19,20 @@ class Connect4():
             board_T.append(rw)
         return board_T
 
-    def check(self, board):
-        c1 = 0
-        c2 = 0
-        for i in range(0, len(board)):
-            for j in range(0, len(board[0])):
-                # print("Values ->", c1, c2)
-                # print(board)
-                if board[i][j] == 1:
-                    c2 = 0
-                    c1 += 1
-                    # print("Values c1 ->", c1)
-                    if c1 == 4: return "Player 1 wins!"
-                elif board[i][j] == 2:
-                    c1 = 0
-                    c2 += 1
-                    # print("Values c2 ->", c2)
-                    if c2 == 4: return "Player 2 wins!"
+    def check(self, board, trans=False):
+        cl = len(board[0])
+        rl = len(board)
+        for i in range(0, rl):
+            for j in range(0, cl):
+                if not trans:
+                    if i <= 2 and j <= 3:
+                        if board[i][j] == board[i][j + 1] == board[i][j + 2] == board[i][j + 3] == 1: return "Player 1 wins!"
+                        elif board[i][j] == board[i][j + 1] == board[i][j + 2] == board[i][j + 3] == 2: return "Player 2 wins!"
                 else:
-                    c1 = 0
-                    c2 = 0
+                    if i <= 3 and j <= 2:
+                        if board[i][j] == board[i][j + 1] == board[i][j + 2] == board[i][j + 3] == 1: return "Player 1 wins!"
+                        elif board[i][j] == board[i][j + 1] == board[i][j + 2] == board[i][j + 3] == 2: return "Player 2 wins!"
+
         return None
     def check_across(self, board):
         cl = len(board[0])
@@ -51,6 +45,7 @@ class Connect4():
                     elif board[rl-i-1][cl-j-1] == board[rl-i-2][cl-j-2]  == board[rl-i-3][cl-j-3] == board[rl-i-4][cl-j-4] == 1: return "Player 1 wins!"
                     elif board[i][j] == board[i+1][j+1] == board[i+2][j+2] == board[i+3][j+3] == 2: return "Player 2 wins!"
                     elif board[rl-i-1][cl-j-1] == board[rl-i-2][cl-j-2]  == board[rl-i-3][cl-j-3] == board[rl-i-4][cl-j-4] == 2: return "Player 2 wins!"
+
         return None
 
     def play(self, col):
@@ -64,11 +59,10 @@ class Connect4():
                     self.player = 2
                     self.result = self.check(self.matrix)
                     if self.result is not None: return self.result
-                    self.result = self.check(self.tpos(self.matrix))
+                    self.result = self.check(self.tpos(self.matrix), True)
                     if self.result is not None: return self.result
                     self.result = self.check_across(self.matrix)
-                    if self.result is not None:
-                        return self.result
+                    if self.result is not None: return self.result
                     else: return "Player 1 has a turn"
                 else:
                     self.matrix[x][col] = 2
@@ -76,7 +70,9 @@ class Connect4():
                     self.player = 1
                     self.result = self.check(self.matrix)
                     if self.result is not None: return self.result
-                    else: self.result = self.check(self.tpos(self.matrix))
+                    self.result = self.check(self.tpos(self.matrix), True)
+                    if self.result is not None: return self.result
+                    self.result = self.check_across(self.matrix)
                     if self.result is not None: return self.result
                     else: return "Player 2 has a turn"
         if self.played is False:
