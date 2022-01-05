@@ -63,10 +63,9 @@ def create_spend_chart(cat_list):
         total_spent += spent
 
     for obj in mychart:
-        obj['percentage'] = int((obj['spent'] / total_spent ) * 100) // 10 *10
+        if obj['spent']:
+            obj['percentage'] = int((obj['spent'] / total_spent ) * 100) // 10 *10
 
-
-    print(mychart)
     print("Percentage spent by category")
     for i in range(100, -10, -10):
         print(f'{str(i).rjust(3)}|', end='')
@@ -78,13 +77,11 @@ def create_spend_chart(cat_list):
     print(''.rjust(3),'-'*(len(mylist)*3+1))
 
     newlist = [ x.cat for x in mylist]
-    full_len = 0
-    for x in mylist:
-        full_len += len(x.cat)
-
+    longest = max(newlist, key=len)
     str1 = ''
-    for i in range(len(mylist) + 2):
-        for j in range(int(full_len / len(mylist)) + 1):
+
+    for i in range(len(longest)):
+        for j in range(len(newlist)):
             try:
                 if newlist[j][i]:
                     str1 += newlist[j][i] + "  "
@@ -116,7 +113,7 @@ def main():
     auto.withdraw(30, "Test Withdrawal")
     auto.display()
 
-    create_spend_chart([food, clothing, auto])
+    create_spend_chart([food, clothing, entertainment, auto])
 
 
 if __name__ == "__main__":
